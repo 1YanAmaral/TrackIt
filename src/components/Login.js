@@ -1,25 +1,28 @@
 import styled from "styled-components";
 import logo from "../styles/img/logo.png";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { login } from "../services/trackit";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  function login(event) {
+  function doLogin(event) {
     event.preventDefault();
-
-    const requisicao = axios.post("https://minha-api.com/login", {
+    login({
       email: email,
       senha: password,
+    }).then((res) => {
+      navigate("/hoje");
     });
   }
 
   return (
     <Container>
       <img src={logo} alt="TrackIt" />
-      <form onSubmit={login}>
+      <form onSubmit={doLogin}>
         <input
           type="email"
           placeholder="email"
