@@ -31,7 +31,7 @@ export default function SignUpPage() {
     e.preventDefault();
     const promise = signup(form);
     promise.then((res) => {
-      console.log("FOI");
+      console.log("FOI", res);
       navigate("/");
     });
     promise.catch(() => alert("Algo está errado, verifique suas informações!"));

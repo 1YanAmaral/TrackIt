@@ -15,13 +15,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  function doLogin(event) {
+  function handleLogin(event) {
     event.preventDefault();
-    const promise = login({
-      email: email,
-      senha: password,
-    });
+    const body = {
+      email,
+      password,
+    };
+    const promise = login(body);
     promise.then((res) => {
+      console.log(res.data);
       navigate("/hoje");
     });
   }
@@ -29,7 +31,7 @@ export default function Login() {
   return (
     <Wrapper>
       <Logo src={logo} alt="TrackIt" />
-      <form onSubmit={doLogin}>
+      <form onSubmit={handleLogin}>
         <Wrapper>
           <Info
             type="email"
