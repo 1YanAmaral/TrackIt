@@ -11,10 +11,11 @@ export default function Login() {
 
   function doLogin(event) {
     event.preventDefault();
-    login({
+    const promise = login({
       email: email,
       senha: password,
-    }).then((res) => {
+    });
+    promise.then((res) => {
       navigate("/hoje");
     });
   }
@@ -23,20 +24,23 @@ export default function Login() {
     <Container>
       <img src={logo} alt="TrackIt" />
       <form onSubmit={doLogin}>
-        <input
-          type="email"
-          placeholder="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="senha"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <button type="submit">Login</button>
+        <Container>
+          <Info
+            type="email"
+            placeholder="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <Info
+            type="password"
+            placeholder="senha"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <Bigbutton type="submit">Entrar</Bigbutton>
+        </Container>
       </form>
+      <SpanLink>Não tem uma conta? Cadastre-se!</SpanLink>
     </Container>
   );
 }
@@ -50,4 +54,37 @@ const Container = styled.div`
   img {
     margin-top: 70px;
   }
+`;
+
+const Info = styled.input`
+  width: 303px;
+  height: 45px;
+  background-color: #ffffff;
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  margin: 6px;
+`;
+
+const Bigbutton = styled.button`
+  width: 303px;
+  height: 45px;
+  background-color: #52b6ff;
+  border-radius: 4.63636px;
+  font-family: "Lexend Deca", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.976px;
+  color: #ffffff;
+  border: none;
+`;
+
+const SpanLink = styled.span`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13.976px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #52b6ff;
+  margin: 25px;
 `;
