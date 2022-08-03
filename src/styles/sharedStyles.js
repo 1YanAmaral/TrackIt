@@ -54,4 +54,12 @@ const Logo = styled.img`
   margin-bottom: 35px;
 `;
 
-export { Wrapper, Info, Bigbutton, SpanLink, Logo };
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f2f2f2;
+`;
+
+export { Wrapper, Info, Bigbutton, SpanLink, Logo, Page };
