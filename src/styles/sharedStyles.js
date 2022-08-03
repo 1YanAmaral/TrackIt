@@ -14,6 +14,15 @@ const Info = styled.input`
   border: 1px solid #d5d5d5;
   border-radius: 5px;
   margin: 6px;
+
+  ::placeholder {
+    font-family: "Lexend Deca", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19.976px;
+    line-height: 25px;
+    color: #dbdbdb;
+  }
 `;
 
 const Bigbutton = styled.button`
@@ -42,6 +51,7 @@ const SpanLink = styled.span`
 
 const Logo = styled.img`
   margin-top: 68px;
+  margin-bottom: 35px;
 `;
 
 export { Wrapper, Info, Bigbutton, SpanLink, Logo };

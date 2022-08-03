@@ -1,6 +1,6 @@
 import logo from "../styles/img/logo.png";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Wrapper,
   Info,
@@ -8,42 +8,72 @@ import {
   SpanLink,
   Logo,
 } from "../styles/sharedStyles";
+import { signup } from "../services/trackItServices";
 
-export default function SignUp() {
-  const [form, setForm] = useState({});
+export default function SignUpPage() {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    email: "",
+    name: "",
+    image: "",
+    password: "",
+  });
 
-  function signup() {}
+  function handleForm(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+    console.log(form);
+  }
+
+  function sendSignUp(e) {
+    e.preventDefault();
+    const promise = signup(form);
+    promise.then((res) => {
+      console.log("FOI");
+      navigate("/");
+    });
+    promise.catch(() => alert("Algo está errado, verifique suas informações!"));
+  }
 
   return (
     <Wrapper>
       <Logo src={logo} alt="TrackIt" />
-      <form>
+      <form onSubmit={sendSignUp}>
         <Wrapper>
           <Info
             type="email"
             placeholder="email"
-            //value={email}
-            //onChange={(event) => setEmail(event.target.value)}
+            name="email"
+            onChange={handleForm}
+            value={form.email}
+            required
           />
           <Info
             type="password"
             placeholder="senha"
-            //value={password}
-            //onChange={(event) => setPassword(event.target.value)}
+            name="password"
+            onChange={handleForm}
+            value={form.password}
+            required
           />
           <Info
-            type="name"
+            type="text"
             placeholder="nome"
-            //value={name}
-            //onChange={(event) => setName(event.target.value)}
+            name="name"
+            onChange={handleForm}
+            value={form.name}
+            required
           />
           <Info
             type="url"
             placeholder="foto"
-            //value={url}
-            //onChange={(event) => setUrl(event.target.value)}
+            name="image"
+            onChange={handleForm}
+            value={form.image}
           />
-          <Bigbutton type="submit">Entrar</Bigbutton>
+          <Bigbutton type="submit">Cadastrar</Bigbutton>
         </Wrapper>
       </form>
       <SpanLink>

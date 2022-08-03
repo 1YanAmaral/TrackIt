@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "../styles/globalStyles";
 import { Wrapper } from "../styles/sharedStyles";
 import Login from "./Login";
-import SignUp from "./SignUp";
+import SignUpPage from "./SignUp";
 
 export default function App() {
   return (
@@ -12,7 +12,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/cadastro" element={<SignUp />} />
+            <Route path="/cadastro" element={<SignUpPage />} />
           </Routes>
         </BrowserRouter>
       </Wrapper>
