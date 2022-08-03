@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import styled from "styled-components";
 import GlobalStyle from "../styles/globalStyles";
+import { Wrapper } from "../styles/sharedStyles";
 import Login from "./Login";
+import SignUp from "./SignUp";
 
 export default function App() {
   return (
@@ -11,16 +12,10 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/cadastro" element={<SignUp />} />
           </Routes>
         </BrowserRouter>
       </Wrapper>
     </>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
