@@ -12,11 +12,14 @@ import {
   Logo,
   Loadbutton,
 } from "../styles/sharedStyles";
+import { useContext } from "react";
+import UserContext from "./UserContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { user, setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -29,6 +32,7 @@ export default function Login() {
     const promise = login(body);
     promise.then((res) => {
       setLoading(true);
+      setUser(res.data);
       console.log(res.data);
       navigate("/hoje");
     });

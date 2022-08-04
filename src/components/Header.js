@@ -1,13 +1,14 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import UserContext from "./UserContext";
 
 export default function Header() {
+  const { user, setUser } = useContext(UserContext);
+
   return (
     <HeaderStyle>
       TrackIt
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/481px-Cat03.jpg"
-        alt="ProfilePic"
-      />
+      <img src={user.image} alt="ProfilePic" />
     </HeaderStyle>
   );
 }
