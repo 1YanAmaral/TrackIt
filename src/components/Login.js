@@ -13,13 +13,15 @@ import {
   Loadbutton,
 } from "../styles/sharedStyles";
 import { useContext } from "react";
-import UserContext from "./UserContext";
+import UserContext from "./context/UserContext";
+import LoginContext from "./context/LoginContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const { token, setToken } = useContext(LoginContext);
 
   const navigate = useNavigate();
 
@@ -33,7 +35,8 @@ export default function Login() {
     promise.then((res) => {
       setLoading(true);
       setUser(res.data);
-      console.log(res.data);
+      setToken(res.data.token);
+      console.log(res.data, res.data.token);
       navigate("/hoje");
     });
   }

@@ -75,5 +75,23 @@ const Page = styled.div`
   width: 100vw;
   background-color: #f2f2f2;
 `;
+const SpanTitle = styled.span`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22.976px;
+  line-height: 29px;
+  color: #126ba5;
+  margin-top: 100px;
+  margin-left: 20px;
+`;
 
-export { Wrapper, Info, Bigbutton, SpanLink, Logo, Page, Loadbutton };
+export {
+  Wrapper,
+  Info,
+  Bigbutton,
+  SpanLink,
+  Logo,
+  Page,
+  Loadbutton,
+  SpanTitle,
+};

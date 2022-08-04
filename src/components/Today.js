@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { Page, Wrapper } from "../styles/sharedStyles";
+import { Page, SpanTitle } from "../styles/sharedStyles";
 import Header from "./Header";
 import { useContext } from "react";
-import UserContext from "./UserContext";
+import UserContext from "./context/UserContext";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import Footer from "./Footer";
 
 export default function Today() {
   const weekday = dayjs().locale("pt-br").format("dddd");
@@ -20,21 +21,14 @@ export default function Today() {
         <SpanToDo>Nenhum hábito concluído ainda</SpanToDo>
         <HabitDiv>
           <Habit>Ler 1 capítulo de livro</Habit>
+          <HabitTrack> Sequência atual: 3 dias</HabitTrack>
+          <HabitTrack> Seu recorde: 5 dias</HabitTrack>
         </HabitDiv>
       </Page>
+      <Footer />
     </>
   );
 }
-
-const SpanTitle = styled.span`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 22.976px;
-  line-height: 29px;
-  color: #126ba5;
-  margin-top: 100px;
-  margin-left: 20px;
-`;
 
 const SpanToDo = styled.span`
   font-style: normal;
@@ -62,6 +56,14 @@ const Habit = styled.span`
   font-style: normal;
   font-weight: 400;
   font-size: 22.976px;
+  line-height: 29px;
+  color: #666666;
+`;
+
+const HabitTrack = styled.span`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
   line-height: 29px;
   color: #666666;
 `;

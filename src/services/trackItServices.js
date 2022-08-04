@@ -13,4 +13,9 @@ function signup(body) {
   return promise;
 }
 
-export { login, signup };
+function createHabit(body, config) {
+  const promise = axios.post(`${BASE_URL}/habits`);
+  return promise;
+}
+
+export { login, signup, createHabit };
