@@ -2,13 +2,15 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { Page } from "../styles/sharedStyles";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getHabits } from "../services/trackItServices";
 import { useContext } from "react";
 import LoginContext from "./context/LoginContext";
 
 export default function Habits() {
   const { token, setToken } = useContext(LoginContext);
+  const [habit, setHabit] = useState([]);
+
   function createHeader() {
     const auth = localStorage.getItem("trackit");
     const config = {
@@ -25,6 +27,7 @@ export default function Habits() {
     const promise = getHabits(createHeader());
     promise
       .then((res) => {
+        setHabit(res.data);
         console.log(res.data, token);
       })
       .catch(console.log("UE"));
@@ -32,20 +35,26 @@ export default function Habits() {
 
   return (
     <>
-      <Header />
-      <Page>
-        <Group>
-          <SpanHabits>Meus hábitos</SpanHabits>
-          <AddButton>+</AddButton>
-        </Group>
-        <HabitsGroup>
-          <UserHabit>
-            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-            começar a trackear!
-          </UserHabit>
-        </HabitsGroup>
-      </Page>
-      <Footer />
+      {habit.length === 0 ? (
+        <>
+          <Header />
+          <Page>
+            <Group>
+              <SpanHabits>Meus hábitos</SpanHabits>
+              <AddButton>+</AddButton>
+            </Group>
+            <HabitsGroup>
+              <UserHabit>
+                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
+                para começar a trackear!
+              </UserHabit>
+            </HabitsGroup>
+          </Page>
+          <Footer />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
