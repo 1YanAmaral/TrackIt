@@ -1,13 +1,22 @@
 import styled from "styled-components";
 import { Page, Wrapper } from "../styles/sharedStyles";
 import Header from "./Header";
+import { useContext } from "react";
+import UserContext from "./UserContext";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
 
 export default function Today() {
+  const weekday = dayjs().locale("pt-br").format("dddd");
+  const day = dayjs().format("DD");
+  const month = dayjs().format("MM");
   return (
     <>
       <Header />
       <Page>
-        <SpanTitle>Segunda, 17/05</SpanTitle>
+        <SpanTitle>
+          {weekday}, {day}/{month}
+        </SpanTitle>
         <SpanToDo>Nenhum hábito concluído ainda</SpanToDo>
         <HabitDiv>
           <Habit>Ler 1 capítulo de livro</Habit>
