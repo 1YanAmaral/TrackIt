@@ -38,6 +38,20 @@ const Bigbutton = styled.button`
   border: none;
 `;
 
+const Loadbutton = styled.button`
+  width: 303px;
+  height: 45px;
+  background-color: #52b6ff;
+  border-radius: 4.63636px;
+  font-family: "Lexend Deca", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.976px;
+  color: #ffffff;
+  opacity: 0.7;
+  border: none;
+`;
+
 const SpanLink = styled.span`
   font-style: normal;
   font-weight: 400;
@@ -62,4 +76,4 @@ const Page = styled.div`
   background-color: #f2f2f2;
 `;
 
-export { Wrapper, Info, Bigbutton, SpanLink, Logo, Page };
+export { Wrapper, Info, Bigbutton, SpanLink, Logo, Page, Loadbutton };
