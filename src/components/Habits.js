@@ -2,8 +2,34 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { Page } from "../styles/sharedStyles";
 import styled from "styled-components";
+import { useEffect } from "react";
+import { getHabits } from "../services/trackItServices";
+import { useContext } from "react";
+import LoginContext from "./context/LoginContext";
 
 export default function Habits() {
+  const { token, setToken } = useContext(LoginContext);
+  function createHeader() {
+    const auth = localStorage.getItem("trackit");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${auth}`,
+      },
+    };
+    console.log(config);
+    return config;
+  }
+  createHeader();
+
+  useEffect(() => {
+    const promise = getHabits(createHeader());
+    promise
+      .then((res) => {
+        console.log(res.data, token);
+      })
+      .catch(console.log("UE"));
+  }, [token]);
+
   return (
     <>
       <Header />

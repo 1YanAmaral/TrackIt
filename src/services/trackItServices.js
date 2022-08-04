@@ -18,4 +18,12 @@ function createHabit(body, config) {
   return promise;
 }
 
-export { login, signup, createHabit };
+function getHabits(config) {
+  const promise = axios.get(
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/",
+    config
+  );
+  return promise;
+}
+
+export { login, signup, createHabit, getHabits };

@@ -32,13 +32,18 @@ export default function Login() {
       password,
     };
     const promise = login(body);
-    promise.then((res) => {
-      setLoading(true);
-      setUser(res.data);
-      setToken(res.data.token);
-      console.log(res.data, res.data.token);
-      navigate("/hoje");
-    });
+    promise
+      .then((res) => {
+        setLoading(true);
+        setUser(res.data);
+        setToken(res.data.token);
+        localStorage.setItem("trackit", res.data.token);
+        console.log(res.data, res.data.token);
+        navigate("/hoje");
+      })
+      .catch(() => {
+        alert("Usuário ou senha incorretos!");
+      });
   }
   if (loading) {
     return (
