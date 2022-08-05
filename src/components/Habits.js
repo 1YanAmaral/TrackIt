@@ -3,7 +3,11 @@ import Header from "./Header";
 import { Page, Info } from "../styles/sharedStyles";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { getHabits, createHabit } from "../services/trackItServices";
+import {
+  getHabits,
+  createHabit,
+  createHeader,
+} from "../services/trackItServices";
 import { useContext } from "react";
 import LoginContext from "./context/LoginContext";
 import "../styles/style.css";
@@ -74,7 +78,7 @@ export default function Habits() {
   //   setDaysId([...newDays]);
   // }
 
-  function createHeader() {
+  /*  function createHeader() {
     const auth = token;
     const config = {
       headers: {
@@ -84,10 +88,10 @@ export default function Habits() {
     console.log(config);
     return config;
   }
-  createHeader();
+  createHeader(); */
 
   useEffect(() => {
-    const promise = getHabits(createHeader());
+    const promise = getHabits(createHeader(token));
     promise
       .then((res) => {
         setHabits(res.data);
