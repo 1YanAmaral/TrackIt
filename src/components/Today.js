@@ -18,6 +18,7 @@ export default function Today() {
   //const { habits, setHabits } = useContext(UserContext);
   const { token } = useContext(LoginContext);
   const [todayHabits, setTodayHabits] = useState([]);
+
   const weekday = dayjs().locale("pt-br").format("dddd");
   const day = dayjs().format("DD");
   const month = dayjs().format("MM");
@@ -34,16 +35,12 @@ export default function Today() {
 
   function check(habitId) {
     const promise = checkHabit(habitId, createHeader(token));
-    promise.then((res) => {
-      setTodayHabits([...todayHabits]);
-    });
+    promise.then();
   }
 
   function uncheck(habitId) {
     const promise = uncheckHabit(habitId, createHeader(token));
-    promise.then((res) => {
-      setTodayHabits([...todayHabits]);
-    });
+    promise.then();
   }
 
   return (
@@ -54,7 +51,6 @@ export default function Today() {
           {weekday}, {day}/{month}
         </SpanTitle>
         <SpanToDo>Nenhum hábito concluído ainda</SpanToDo>
-
         {todayHabits.map((value, index) =>
           value.done ? (
             <HabitDivChecked key={index}>
@@ -69,20 +65,21 @@ export default function Today() {
               ></ion-icon>
             </HabitDivChecked>
           ) : (
-            <HabitDiv key={value.id}>
-              <Habit>{value.name}</Habit>
-              <HabitTrack>
-                Sequência atual: {value.currentSequence} dias
-              </HabitTrack>
-              <HabitTrack>
-                {" "}
-                Seu recorde: {value.highestSequence} dias
-              </HabitTrack>
-              <ion-icon
-                name="checkbox"
-                onClick={() => check(value.id)}
-              ></ion-icon>
-            </HabitDiv>
+            <>
+              <HabitDiv key={value.id}>
+                <Habit>{value.name}</Habit>
+                <HabitTrack>
+                  Sequência atual: {value.currentSequence} dias
+                </HabitTrack>
+                <HabitTrack>
+                  Seu recorde: {value.highestSequence} dias
+                </HabitTrack>
+                <ion-icon
+                  name="checkbox"
+                  onClick={() => check(value.id)}
+                ></ion-icon>
+              </HabitDiv>
+            </>
           )
         )}
       </Page>

@@ -56,6 +56,9 @@ const Loadbutton = styled.button`
   color: #ffffff;
   opacity: 0.7;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SpanLink = styled.span`
