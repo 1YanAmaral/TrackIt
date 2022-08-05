@@ -6,11 +6,51 @@ import { useEffect, useState } from "react";
 import { getHabits } from "../services/trackItServices";
 import { useContext } from "react";
 import LoginContext from "./context/LoginContext";
+import "../styles/style.css";
+
+function Days({ weekday, dayId, daysId, setDaysId }) {
+  const [selected, setSelected] = useState("dayOption");
+
+  return selected === "dayOption" ? (
+    <div
+      className={selected}
+      onClick={() => {
+        setSelected("dayOption selected");
+        setDaysId([...daysId, dayId]);
+        console.log(daysId);
+      }}
+    >
+      {weekday}
+    </div>
+  ) : (
+    <div
+      className={selected}
+      onClick={() => {
+        setSelected("dayOption");
+        setDaysId(daysId.filter((value) => value !== dayId));
+        console.log(daysId);
+      }}
+    >
+      {weekday}
+    </div>
+  );
+}
 
 export default function Habits() {
   const { token, setToken } = useContext(LoginContext);
   const [habit, setHabit] = useState([]);
   const [clicked, setClicked] = useState(false);
+  const [daysId, setDaysId] = useState([]);
+
+  const arrDays = [
+    { id: 1, name: "D" },
+    { id: 2, name: "S" },
+    { id: 3, name: "T" },
+    { id: 4, name: "Q" },
+    { id: 5, name: "Q" },
+    { id: 6, name: "S" },
+    { id: 7, name: "S" },
+  ];
 
   function createHeader() {
     const auth = localStorage.getItem("trackit");
@@ -53,7 +93,17 @@ export default function Habits() {
             <HabitsGroup>
               {clicked ? (
                 <HabitAdd>
-                  <Info placeholder="nome do hábito"></Info>
+                  <HabitInput placeholder="nome do hábito"></HabitInput>
+                  <OptionsGroup>
+                    {arrDays.map((day) => (
+                      <Days
+                        weekday={day.name}
+                        dayId={day.id}
+                        daysId={daysId}
+                        setDaysId={setDaysId}
+                      />
+                    ))}
+                  </OptionsGroup>
                   <ButtonGroup>
                     <CancelButton>Cancelar</CancelButton>
                     <SaveButton>Salvar</SaveButton>
@@ -137,7 +187,7 @@ const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
-  margin-top: 10px;
+  margin-top: 30px;
 `;
 
 const SaveButton = styled.button`
@@ -172,4 +222,51 @@ const CancelButton = styled.button`
   line-height: 25px;
   color: #52b6ff;
   border: none;
+`;
+
+const DayOptions = styled.div`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lexend Deca", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 25px;
+  color: ${(props) => (props.selected ? "#ffffff" : "#dbdbdb")};
+  border: solid 1px #d4d4d4;
+  border-radius: 5px;
+  margin-right: 5px;
+  background-color: ${(props) => (props.selected ? "#CFCFCF" : "#ffffff")};
+`;
+
+const OptionsGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const HabitInput = styled.input`
+  width: 303px;
+  height: 45px;
+  background-color: #ffffff;
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: "Lexend Deca", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  color: #666666;
+
+  ::placeholder {
+    font-family: "Lexend Deca", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19.976px;
+    line-height: 25px;
+    color: #dbdbdb;
+  }
 `;

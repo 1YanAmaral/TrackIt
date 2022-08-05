@@ -1,6 +1,5 @@
 import logo from "../styles/img/logo.png";
 import { ThreeDots } from "react-loader-spinner";
-//import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { useState } from "react";
 import { login } from "../services/trackItServices";
 import { useNavigate, Link } from "react-router-dom";
@@ -27,6 +26,7 @@ export default function Login() {
 
   function handleLogin(event) {
     event.preventDefault();
+    setLoading(true);
     const body = {
       email,
       password,
@@ -34,7 +34,6 @@ export default function Login() {
     const promise = login(body);
     promise
       .then((res) => {
-        setLoading(true);
         setUser(res.data);
         setToken(res.data.token);
         localStorage.setItem("trackit", res.data.token);
@@ -43,6 +42,7 @@ export default function Login() {
       })
       .catch(() => {
         alert("Usuário ou senha incorretos!");
+        setLoading(false);
       });
   }
   if (loading) {
@@ -109,7 +109,7 @@ export default function Login() {
   height="80"
   width="80"
   radius="9"
-  color="#fff"
+  color="red"
   ariaLabel="three-dots-loading"
   wrapperStyle={{}}
   wrapperClassName=""

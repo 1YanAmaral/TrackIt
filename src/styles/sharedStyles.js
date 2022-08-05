@@ -8,6 +8,12 @@ const Wrapper = styled.div`
 `;
 
 const Info = styled.input`
+  font-family: "Lexend Deca", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.976px;
+  line-height: 25px;
+  color: #666666;
   width: 303px;
   height: 45px;
   background-color: #ffffff;
