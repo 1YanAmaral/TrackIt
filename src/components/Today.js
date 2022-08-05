@@ -8,6 +8,7 @@ import "dayjs/locale/pt-br";
 import Footer from "./Footer";
 
 export default function Today() {
+  const { habits, setHabits } = useContext(UserContext);
   const weekday = dayjs().locale("pt-br").format("dddd");
   const day = dayjs().format("DD");
   const month = dayjs().format("MM");
@@ -19,11 +20,15 @@ export default function Today() {
           {weekday}, {day}/{month}
         </SpanTitle>
         <SpanToDo>Nenhum hábito concluído ainda</SpanToDo>
-        <HabitDiv>
-          <Habit>Ler 1 capítulo de livro</Habit>
-          <HabitTrack> Sequência atual: 3 dias</HabitTrack>
-          <HabitTrack> Seu recorde: 5 dias</HabitTrack>
-        </HabitDiv>
+
+        {habits.map((value) => (
+          <HabitDiv>
+            <Habit>{value.name}</Habit>
+            <HabitTrack> Sequência atual: 3 dias</HabitTrack>
+            <HabitTrack> Seu recorde: 5 dias</HabitTrack>
+            <ion-icon name="checkbox"></ion-icon>
+          </HabitDiv>
+        ))}
       </Page>
       <Footer />
     </>
@@ -47,9 +52,17 @@ const HabitDiv = styled.div`
   background-color: #ffffff;
   width: 340px;
   height: 94px;
-  margin-left: 20px;
+  margin: 10px auto;
   padding: 10px;
   border-radius: 5px;
+  position: relative;
+
+  ion-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 90px;
+    color: #e7e7e7;
+  }
 `;
 
 const Habit = styled.span`
@@ -64,6 +77,6 @@ const HabitTrack = styled.span`
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 29px;
+  line-height: 20px;
   color: #666666;
 `;

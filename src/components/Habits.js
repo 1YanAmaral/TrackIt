@@ -8,6 +8,7 @@ import { useContext } from "react";
 import LoginContext from "./context/LoginContext";
 import "../styles/style.css";
 import { ThreeDots } from "react-loader-spinner";
+import UserContext from "./context/UserContext";
 
 function Days({ weekday, dayId, daysId, setDaysId }) {
   const [selected, setSelected] = useState("dayOption");
@@ -39,7 +40,8 @@ function Days({ weekday, dayId, daysId, setDaysId }) {
 
 export default function Habits() {
   const { token, setToken } = useContext(LoginContext);
-  const [habits, setHabits] = useState([]);
+  const { habits, setHabits } = useContext(UserContext);
+
   const [clicked, setClicked] = useState(false);
   const [daysId, setDaysId] = useState([]);
   const [form, setForm] = useState({
