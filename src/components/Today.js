@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Page, SpanTitle } from "../styles/sharedStyles";
 import Header from "./Header";
 import { useContext, useEffect, useState } from "react";
-import UserContext from "./context/UserContext";
+//import UserContext from "./context/UserContext";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import Footer from "./Footer";
@@ -15,7 +15,7 @@ import {
 import LoginContext from "./context/LoginContext";
 
 export default function Today() {
-  const { habits, setHabits } = useContext(UserContext);
+  //const { habits, setHabits } = useContext(UserContext);
   const { token } = useContext(LoginContext);
   const [todayHabits, setTodayHabits] = useState([]);
   const weekday = dayjs().locale("pt-br").format("dddd");
@@ -33,11 +33,17 @@ export default function Today() {
   }, []);
 
   function check(habitId) {
-    checkHabit(habitId, createHeader(token));
+    const promise = checkHabit(habitId, createHeader(token));
+    promise.then((res) => {
+      setTodayHabits([...todayHabits]);
+    });
   }
 
   function uncheck(habitId) {
-    uncheckHabit(habitId, createHeader(token));
+    const promise = uncheckHabit(habitId, createHeader(token));
+    promise.then((res) => {
+      setTodayHabits([...todayHabits]);
+    });
   }
 
   return (
@@ -49,9 +55,9 @@ export default function Today() {
         </SpanTitle>
         <SpanToDo>Nenhum hábito concluído ainda</SpanToDo>
 
-        {todayHabits.map((value) =>
+        {todayHabits.map((value, index) =>
           value.done ? (
-            <HabitDivChecked>
+            <HabitDivChecked key={index}>
               <Habit>{value.name}</Habit>
               <HabitTrack>
                 Sequência atual: {value.currentSequence} dias
@@ -63,7 +69,7 @@ export default function Today() {
               ></ion-icon>
             </HabitDivChecked>
           ) : (
-            <HabitDiv>
+            <HabitDiv key={value.id}>
               <Habit>{value.name}</Habit>
               <HabitTrack>
                 Sequência atual: {value.currentSequence} dias

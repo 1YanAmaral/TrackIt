@@ -38,11 +38,17 @@ function getToday(config) {
 }
 
 function checkHabit(habitId, config) {
-  const promise = axios.post(`${BASE_URL}/habits/${habitId}/check`, config);
+  const promise = axios.post(`${BASE_URL}/habits/${habitId}/check`, {}, config);
+  return promise;
 }
 
 function uncheckHabit(habitId, config) {
-  const promise = axios.post(`${BASE_URL}/habits/${habitId}/uncheck`, config);
+  const promise = axios.post(
+    `${BASE_URL}/habits/${habitId}/uncheck`,
+    {},
+    config
+  );
+  return promise;
 }
 
 export {

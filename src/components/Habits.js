@@ -62,34 +62,6 @@ export default function Habits() {
     { id: 7, name: "S" },
   ];
 
-  // function selectDay(dayId) {
-  //   const newDays = arrDays.map((value) => {
-  //     if (value.id === dayId) {
-  //       return {
-  //         ...value,
-  //         selected: !value.selected,
-  //       };
-  //     }
-  //     return {
-  //       ...value,
-  //     };
-  //   });
-
-  //   setDaysId([...newDays]);
-  // }
-
-  /*  function createHeader() {
-    const auth = token;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${auth}`,
-      },
-    };
-    console.log(config);
-    return config;
-  }
-  createHeader(); */
-
   useEffect(() => {
     const promise = getHabits(createHeader(token));
     promise
