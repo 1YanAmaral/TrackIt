@@ -215,12 +215,13 @@ export default function Habits() {
               ) : (
                 <></>
               )}
-              <HabitAdd>
-                {habits.map((value) => {
-                  <UserHabit>{value.name}</UserHabit>;
-                  console.log(habits, value.name);
-                })}
-              </HabitAdd>
+
+              {habits.map((value) => (
+                <HabitDiv>
+                  <UserHabit>{value.name}</UserHabit>
+                  <ion-icon name="trash-outline"></ion-icon>
+                </HabitDiv>
+              ))}
             </HabitsGroup>
           </Page>
 
@@ -263,6 +264,8 @@ const HabitsGroup = styled.div`
 const AddButton = styled.button`
   width: 40px;
   height: 35px;
+  font-size: 25px;
+  font-weight: 600;
   background-color: #52b6ff;
   border-radius: 4.63636px;
   color: #fff;
@@ -371,5 +374,24 @@ const HabitInput = styled.input`
     font-size: 19.976px;
     line-height: 25px;
     color: #dbdbdb;
+  }
+`;
+
+const HabitDiv = styled.div`
+  width: 340px;
+  height: 91px;
+  display: flex;
+  padding: 15px;
+  font-family: "Lexend Deca", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  background-color: #ffffff;
+  margin: 10px;
+  border-radius: 5px;
+  position: relative;
+
+  ion-icon {
+    position: absolute;
+    right: 15px;
   }
 `;
