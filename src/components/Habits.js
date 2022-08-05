@@ -41,6 +41,9 @@ export default function Habits() {
   const [habit, setHabit] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [daysId, setDaysId] = useState([]);
+  const [form, setForm] = useState({
+    name: "",
+  });
 
   const arrDays = [
     { id: 1, name: "D" },
@@ -51,6 +54,22 @@ export default function Habits() {
     { id: 6, name: "S" },
     { id: 7, name: "S" },
   ];
+
+  // function selectDay(dayId) {
+  //   const newDays = arrDays.map((value) => {
+  //     if (value.id === dayId) {
+  //       return {
+  //         ...value,
+  //         selected: !value.selected,
+  //       };
+  //     }
+  //     return {
+  //       ...value,
+  //     };
+  //   });
+
+  //   setDaysId([...newDays]);
+  // }
 
   function createHeader() {
     const auth = localStorage.getItem("trackit");
@@ -74,6 +93,25 @@ export default function Habits() {
       .catch(console.log("UE"));
   }, [token]);
 
+  function handleForm(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+
+    console.log(form);
+  }
+
+  function newHabit(e) {
+    e.preventDefault();
+    const body = {
+      days: daysId,
+      ...form,
+    };
+
+    console.log(body);
+  }
+
   return (
     <>
       {habit.length === 0 ? (
@@ -93,21 +131,28 @@ export default function Habits() {
             <HabitsGroup>
               {clicked ? (
                 <HabitAdd>
-                  <HabitInput placeholder="nome do hábito"></HabitInput>
-                  <OptionsGroup>
-                    {arrDays.map((day) => (
-                      <Days
-                        weekday={day.name}
-                        dayId={day.id}
-                        daysId={daysId}
-                        setDaysId={setDaysId}
-                      />
-                    ))}
-                  </OptionsGroup>
-                  <ButtonGroup>
-                    <CancelButton>Cancelar</CancelButton>
-                    <SaveButton>Salvar</SaveButton>
-                  </ButtonGroup>
+                  <form onSubmit={newHabit}>
+                    <HabitInput
+                      name="name"
+                      onChange={handleForm}
+                      value={form.name}
+                      placeholder="nome do hábito"
+                    ></HabitInput>
+                    <OptionsGroup>
+                      {arrDays.map((day) => (
+                        <Days
+                          weekday={day.name}
+                          dayId={day.id}
+                          daysId={daysId}
+                          setDaysId={setDaysId}
+                        />
+                      ))}
+                    </OptionsGroup>
+                    <ButtonGroup>
+                      <CancelButton>Cancelar</CancelButton>
+                      <SaveButton type="submit">Salvar</SaveButton>
+                    </ButtonGroup>
+                  </form>
                 </HabitAdd>
               ) : (
                 <></>
