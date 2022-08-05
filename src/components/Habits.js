@@ -3,7 +3,7 @@ import Header from "./Header";
 import { Page, Info } from "../styles/sharedStyles";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { getHabits } from "../services/trackItServices";
+import { getHabits, createHabit } from "../services/trackItServices";
 import { useContext } from "react";
 import LoginContext from "./context/LoginContext";
 import "../styles/style.css";
@@ -105,11 +105,16 @@ export default function Habits() {
   function newHabit(e) {
     e.preventDefault();
     const body = {
-      days: daysId,
       ...form,
+      days: daysId,
     };
 
-    console.log(body);
+    const promise = createHabit(body, createHeader());
+    promise.then((res) => {
+      console.log(res.data);
+    });
+
+    console.log(body, promise);
   }
 
   return (
