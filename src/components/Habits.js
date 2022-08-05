@@ -7,6 +7,7 @@ import { getHabits, createHabit } from "../services/trackItServices";
 import { useContext } from "react";
 import LoginContext from "./context/LoginContext";
 import "../styles/style.css";
+import { ThreeDots } from "react-loader-spinner";
 
 function Days({ weekday, dayId, daysId, setDaysId }) {
   const [selected, setSelected] = useState("dayOption");
@@ -38,7 +39,7 @@ function Days({ weekday, dayId, daysId, setDaysId }) {
 
 export default function Habits() {
   const { token, setToken } = useContext(LoginContext);
-  const [habit, setHabit] = useState([]);
+  const [habits, setHabits] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [daysId, setDaysId] = useState([]);
   const [form, setForm] = useState({
@@ -72,7 +73,7 @@ export default function Habits() {
   // }
 
   function createHeader() {
-    const auth = localStorage.getItem("trackit");
+    const auth = token;
     const config = {
       headers: {
         Authorization: `Bearer ${auth}`,
@@ -87,11 +88,11 @@ export default function Habits() {
     const promise = getHabits(createHeader());
     promise
       .then((res) => {
-        setHabit(res.data);
-        console.log(res.data, token);
+        setHabits(res.data);
+        console.log(token);
       })
-      .catch(console.log("UE"));
-  }, [token]);
+      .catch(<ThreeDots />);
+  }, []);
 
   function handleForm(e) {
     setForm({
@@ -111,15 +112,15 @@ export default function Habits() {
 
     const promise = createHabit(body, createHeader());
     promise.then((res) => {
-      console.log(res.data);
+      console.log(res.data, habits);
     });
 
-    console.log(body, promise);
+    setClicked(false);
   }
 
   return (
     <>
-      {habit.length === 0 ? (
+      {habits.length === 0 ? (
         <>
           <Header />
           <Page>
@@ -172,7 +173,59 @@ export default function Habits() {
           <Footer />
         </>
       ) : (
-        <></>
+        <>
+          <Header />
+          <Page>
+            <Group>
+              <SpanHabits>Meus hábitos</SpanHabits>
+              <AddButton
+                onClick={() => {
+                  setClicked(!clicked);
+                }}
+              >
+                +
+              </AddButton>
+            </Group>
+            <HabitsGroup>
+              {clicked ? (
+                <HabitAdd>
+                  <form onSubmit={newHabit}>
+                    <HabitInput
+                      name="name"
+                      onChange={handleForm}
+                      value={form.name}
+                      placeholder="nome do hábito"
+                    ></HabitInput>
+                    <OptionsGroup>
+                      {arrDays.map((day) => (
+                        <Days
+                          weekday={day.name}
+                          dayId={day.id}
+                          daysId={daysId}
+                          setDaysId={setDaysId}
+                        />
+                      ))}
+                    </OptionsGroup>
+                    <ButtonGroup>
+                      <CancelButton>Cancelar</CancelButton>
+                      <SaveButton type="submit">Salvar</SaveButton>
+                    </ButtonGroup>
+                  </form>
+                </HabitAdd>
+              ) : (
+                <></>
+              )}
+              <HabitAdd>
+                {habits.map((value) => {
+                  <UserHabit>{value.name}</UserHabit>;
+                  console.log(habits, value.name);
+                })}
+              </HabitAdd>
+            </HabitsGroup>
+          </Page>
+
+          <Footer />
+        </>
       )}
     </>
   );

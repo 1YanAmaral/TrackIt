@@ -25,7 +25,7 @@ export default function App() {
                 <Route path="/cadastro" element={<SignUpPage />} />
                 <Route path="/hoje" element={<Today />} />
                 <Route path="/habitos" element={<Habits />} />
-                <Route path="/historico" element={<Habits />} />
+                <Route path="/historico" element={<History />} />
               </Routes>
             </UserContext.Provider>
           </LoginContext.Provider>

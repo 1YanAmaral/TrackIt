@@ -36,7 +36,7 @@ export default function Login() {
       .then((res) => {
         setUser(res.data);
         setToken(res.data.token);
-        localStorage.setItem("trackit", res.data.token);
+        //localStorage.setItem("trackit", res.data.token);
         console.log(res.data, res.data.token);
         navigate("/hoje");
       })
