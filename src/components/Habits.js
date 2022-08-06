@@ -218,15 +218,30 @@ export default function Habits() {
               )}
 
               {habits.map((value) => (
-                <HabitDiv>
-                  <UserHabit>{value.name}</UserHabit>
-                  <ion-icon
-                    onClick={() => {
-                      delHabit(value.id);
-                    }}
-                    name="trash-outline"
-                  ></ion-icon>
-                </HabitDiv>
+                <>
+                  <HabitDiv>
+                    <UserHabit>{value.name}</UserHabit>
+                    <ion-icon
+                      onClick={() => {
+                        delHabit(value.id);
+                      }}
+                      name="trash-outline"
+                    ></ion-icon>
+                    <OptionsGroup>
+                      {arrDays.map((day) =>
+                        Number(day.id) === Number(value.days) ? (
+                          <DayOptions inputColor="white" bgColor="#cfcfcf">
+                            {day.name}
+                          </DayOptions>
+                        ) : (
+                          <DayOptions inputColor="#cfcfcf" bgColor="white">
+                            {day.name}
+                          </DayOptions>
+                        )
+                      )}
+                    </OptionsGroup>
+                  </HabitDiv>
+                </>
               ))}
             </HabitsGroup>
           </Page>
@@ -283,6 +298,7 @@ const UserHabit = styled.span`
   font-size: 17.976px;
   line-height: 22px;
   color: #666666;
+  margin-bottom: 10px;
 `;
 
 const HabitAdd = styled.div`
@@ -347,11 +363,11 @@ const DayOptions = styled.div`
   font-weight: 400;
   font-size: 19px;
   line-height: 25px;
-  color: ${(props) => (props.selected ? "#ffffff" : "#dbdbdb")};
+  color: ${(props) => props.inputColor};
   border: solid 1px #d4d4d4;
   border-radius: 5px;
   margin-right: 5px;
-  background-color: ${(props) => (props.selected ? "#CFCFCF" : "#ffffff")};
+  background-color: ${(props) => props.bgColor}; ;
 `;
 
 const OptionsGroup = styled.div`
@@ -387,6 +403,7 @@ const HabitDiv = styled.div`
   width: 340px;
   height: 91px;
   display: flex;
+  flex-direction: column;
   padding: 15px;
   font-family: "Lexend Deca", sans-serif;
   font-style: normal;
