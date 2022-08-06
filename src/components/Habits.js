@@ -95,23 +95,28 @@ export default function Habits() {
     const promise = createHabit(body, createHeader(token));
     promise.then((res) => {
       console.log(res.data, habits);
+      setReload(!reload);
     });
 
     setClicked(false);
   }
 
   function delHabit(habitId) {
-    const body = {
-      data: { id: habitId },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+    if (window.confirm("Tem certeza que quer excluir esse hábito?")) {
+      const body = {
+        data: { id: habitId },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-    const promise = deleteHabit(body, habitId);
-    promise.then(() => {
-      setReload(!reload);
-    });
+      const promise = deleteHabit(body, habitId);
+      promise.then(() => {
+        setReload(!reload);
+      });
+    } else {
+      return;
+    }
   }
 
   return (
