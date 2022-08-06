@@ -14,6 +14,7 @@ export default function App() {
   const [user, setUser] = useState([]);
   const [token, setToken] = useState("");
   const [habits, setHabits] = useState([]);
+  const [todayHabits, setTodayHabits] = useState([]);
   const [checkedHabits, setCheckedHabits] = useState([]);
   return (
     <>
@@ -29,6 +30,8 @@ export default function App() {
                 setHabits,
                 checkedHabits,
                 setCheckedHabits,
+                todayHabits,
+                setTodayHabits,
               }}
             >
               <Routes>

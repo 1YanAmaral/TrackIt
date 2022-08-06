@@ -18,8 +18,8 @@ import UserContext from "./context/UserContext";
 export default function Today() {
   //const { habits, setHabits } = useContext(UserContext);
   const { token } = useContext(LoginContext);
-  const { checkedHabits, setCheckedHabits } = useContext(UserContext);
-  const [todayHabits, setTodayHabits] = useState([]);
+  const { checkedHabits, setCheckedHabits, todayHabits, setTodayHabits } =
+    useContext(UserContext);
 
   const weekday = dayjs().locale("pt-br").format("dddd");
   const day = dayjs().format("DD");

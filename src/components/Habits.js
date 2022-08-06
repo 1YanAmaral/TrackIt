@@ -7,6 +7,7 @@ import {
   getHabits,
   createHabit,
   createHeader,
+  deleteHabit,
 } from "../services/trackItServices";
 import { useContext } from "react";
 import LoginContext from "./context/LoginContext";
@@ -45,6 +46,8 @@ function Days({ weekday, dayId, daysId, setDaysId }) {
 export default function Habits() {
   const { token, setToken } = useContext(LoginContext);
   const { habits, setHabits } = useContext(UserContext);
+  const { checkedHabits, todayHabits } = useContext(UserContext);
+  const [reload, setReload] = useState(false);
 
   const [clicked, setClicked] = useState(false);
   const [daysId, setDaysId] = useState([]);
@@ -68,9 +71,10 @@ export default function Habits() {
       .then((res) => {
         setHabits(res.data);
         console.log(token);
+        console.log(res.data);
       })
       .catch(<ThreeDots />);
-  }, []);
+  }, [reload]);
 
   function handleForm(e) {
     setForm({
@@ -88,12 +92,26 @@ export default function Habits() {
       days: daysId,
     };
 
-    const promise = createHabit(body, createHeader());
+    const promise = createHabit(body, createHeader(token));
     promise.then((res) => {
       console.log(res.data, habits);
     });
 
     setClicked(false);
+  }
+
+  function delHabit(habitId) {
+    const body = {
+      data: { id: habitId },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const promise = deleteHabit(body, habitId);
+    promise.then(() => {
+      setReload(!reload);
+    });
   }
 
   return (
@@ -197,13 +215,18 @@ export default function Habits() {
               {habits.map((value) => (
                 <HabitDiv>
                   <UserHabit>{value.name}</UserHabit>
-                  <ion-icon name="trash-outline"></ion-icon>
+                  <ion-icon
+                    onClick={() => {
+                      delHabit(value.id);
+                    }}
+                    name="trash-outline"
+                  ></ion-icon>
                 </HabitDiv>
               ))}
             </HabitsGroup>
           </Page>
 
-          <Footer />
+          <Footer checked={checkedHabits.length} today={todayHabits.length} />
         </>
       )}
     </>

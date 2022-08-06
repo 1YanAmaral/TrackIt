@@ -2,8 +2,11 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { Page, SpanTitle } from "../styles/sharedStyles";
 import styled from "styled-components";
+import { useContext } from "react";
+import UserContext from "./context/UserContext";
 
 export default function History() {
+  const { checkedHabits, todayHabits } = useContext(UserContext);
   return (
     <>
       <Header />
@@ -13,7 +16,7 @@ export default function History() {
           Em breve você poderá ver o histórico dos seu hábitos aqui!
         </Message>
       </Page>
-      <Footer />
+      <Footer checked={checkedHabits.length} today={todayHabits.length} />
     </>
   );
 }

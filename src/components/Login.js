@@ -40,8 +40,8 @@ export default function Login() {
         console.log(res.data, res.data.token);
         navigate("/hoje");
       })
-      .catch(() => {
-        alert("Usuário ou senha incorretos!");
+      .catch((res) => {
+        alert(res.response.data.message);
         setLoading(false);
       });
   }
@@ -52,6 +52,7 @@ export default function Login() {
         <form onSubmit={handleLogin}>
           <Wrapper>
             <Info
+              required
               disabled={true}
               type="email"
               placeholder="email"
@@ -59,6 +60,7 @@ export default function Login() {
               onChange={(event) => setEmail(event.target.value)}
             />
             <Info
+              required
               disabled={true}
               type="password"
               placeholder="senha"
@@ -82,12 +84,14 @@ export default function Login() {
       <form onSubmit={handleLogin}>
         <Wrapper>
           <Info
+            required
             type="email"
             placeholder="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
           <Info
+            required
             type="password"
             placeholder="senha"
             value={password}

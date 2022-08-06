@@ -83,6 +83,7 @@ const Page = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: #f2f2f2;
+  margin-bottom: 150px;
 `;
 const SpanTitle = styled.span`
   font-style: normal;

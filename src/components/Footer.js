@@ -5,8 +5,6 @@ import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 
 export default function Footer({ checked, today }) {
-  //const percentage = 66;
-
   return (
     <>
       <FooterStyle>
@@ -42,10 +40,12 @@ const FooterStyle = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 1;
   font-style: normal;
   font-weight: 400;
   font-size: 17.976px;
   line-height: 22px;
   text-align: center;
   color: #52b6ff;
+  background-color: #fff;
 `;

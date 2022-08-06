@@ -21,6 +21,7 @@ const HeaderStyle = styled.div`
   padding: 20px;
   top: 0;
   left: 0;
+  z-index: 1;
   height: 70px;
   width: 100vw;
   font-family: "Playball", cursive;

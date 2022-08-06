@@ -51,6 +51,11 @@ function uncheckHabit(habitId, config) {
   return promise;
 }
 
+function deleteHabit(body, habitId) {
+  const promise = axios.delete(`${BASE_URL}/habits/${habitId}`, body);
+  return promise;
+}
+
 export {
   login,
   signup,
@@ -60,4 +65,5 @@ export {
   getToday,
   checkHabit,
   uncheckHabit,
+  deleteHabit,
 };
