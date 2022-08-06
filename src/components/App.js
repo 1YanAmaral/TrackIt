@@ -14,13 +14,23 @@ export default function App() {
   const [user, setUser] = useState([]);
   const [token, setToken] = useState("");
   const [habits, setHabits] = useState([]);
+  const [checkedHabits, setCheckedHabits] = useState([]);
   return (
     <>
       <GlobalStyle />
       <Wrapper>
         <BrowserRouter>
           <LoginContext.Provider value={{ token, setToken }}>
-            <UserContext.Provider value={{ user, setUser, habits, setHabits }}>
+            <UserContext.Provider
+              value={{
+                user,
+                setUser,
+                habits,
+                setHabits,
+                checkedHabits,
+                setCheckedHabits,
+              }}
+            >
               <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/cadastro" element={<SignUpPage />} />

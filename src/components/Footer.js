@@ -3,8 +3,9 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import { buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
-export default function Footer() {
-  const percentage = 66;
+
+export default function Footer({ checked, today }) {
+  //const percentage = 66;
 
   return (
     <>
@@ -13,7 +14,7 @@ export default function Footer() {
         <div style={{ width: 91, height: 91, marginBottom: 50 }}>
           <Link to="/hoje">
             <CircularProgressbar
-              value={percentage}
+              value={(checked / today) * 100}
               text={"Hoje"}
               background
               backgroundPadding={6}

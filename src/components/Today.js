@@ -13,12 +13,13 @@ import {
   uncheckHabit,
 } from "../services/trackItServices";
 import LoginContext from "./context/LoginContext";
+import UserContext from "./context/UserContext";
 
 export default function Today() {
   //const { habits, setHabits } = useContext(UserContext);
   const { token } = useContext(LoginContext);
+  const { checkedHabits, setCheckedHabits } = useContext(UserContext);
   const [todayHabits, setTodayHabits] = useState([]);
-  const [reloadToday, setReloadToday] = useState(false);
 
   const weekday = dayjs().locale("pt-br").format("dddd");
   const day = dayjs().format("DD");
@@ -32,19 +33,21 @@ export default function Today() {
         setTodayHabits(res.data);
       })
       .catch("Aguarde...");
-  }, [reloadToday]);
+  }, [checkedHabits]);
 
   function check(habitId) {
     const promise = checkHabit(habitId, createHeader(token));
     promise.then(() => {
-      setReloadToday(!reloadToday);
+      setCheckedHabits([...checkedHabits, habitId]);
+      console.log(checkedHabits);
     });
   }
 
   function uncheck(habitId) {
     const promise = uncheckHabit(habitId, createHeader(token));
     promise.then(() => {
-      setReloadToday(!reloadToday);
+      setCheckedHabits(checkedHabits.filter((value) => value !== habitId));
+      console.log(checkedHabits);
     });
   }
 
@@ -55,13 +58,21 @@ export default function Today() {
         <SpanTitle>
           {weekday}, {day}/{month}
         </SpanTitle>
-        <SpanToDo>Nenhum hábito concluído ainda</SpanToDo>
+        {checkedHabits.length === 0 ? (
+          <SpanToDo>Nenhum hábito concluído ainda</SpanToDo>
+        ) : (
+          <SpanDone>
+            {(checkedHabits.length / todayHabits.length) * 100}% dos hábitos
+            concluídos
+          </SpanDone>
+        )}
+
         {todayHabits.map((value, index) =>
           value.done ? (
             <HabitDivChecked key={index}>
               <Habit>{value.name}</Habit>
               <HabitTrack>
-                Sequência atual: {value.currentSequence} dias
+                Sequência atual: <Green>{value.currentSequence} dias</Green>
               </HabitTrack>
               <HabitTrack>Seu recorde: {value.highestSequence} dias</HabitTrack>
               <ion-icon
@@ -88,7 +99,7 @@ export default function Today() {
           )
         )}
       </Page>
-      <Footer />
+      <Footer checked={checkedHabits.length} today={todayHabits.length} />
     </>
   );
 }
@@ -99,6 +110,16 @@ const SpanToDo = styled.span`
   font-size: 17.976px;
   line-height: 22px;
   color: #bababa;
+  margin-bottom: 30px;
+  margin-left: 20px;
+`;
+
+const SpanDone = styled.span`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  color: #8fc549;
   margin-bottom: 30px;
   margin-left: 20px;
 `;
@@ -157,4 +178,8 @@ const HabitTrack = styled.span`
   font-size: 14px;
   line-height: 20px;
   color: #666666;
+`;
+
+const Green = styled.span`
+  color: #8fc549;
 `;
