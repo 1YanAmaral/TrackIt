@@ -228,14 +228,14 @@ export default function Habits() {
                       name="trash-outline"
                     ></ion-icon>
                     <OptionsGroup>
-                      {arrDays.map((day) =>
-                        Number(day.id) === Number(value.days) ? (
+                      {arrDays.map((day, index) =>
+                        Number(day.id) === Number(value.days[index]) ? (
                           <DayOptions inputColor="white" bgColor="#cfcfcf">
                             {day.name}
                           </DayOptions>
                         ) : (
                           <DayOptions inputColor="#cfcfcf" bgColor="white">
-                            {day.name}
+                            {value.days}
                           </DayOptions>
                         )
                       )}
