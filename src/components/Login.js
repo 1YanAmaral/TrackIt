@@ -66,7 +66,7 @@ export default function Login() {
               onChange={(event) => setPassword(event.target.value)}
             />
             <Loadbutton type="submit">
-              <ThreeDots />
+              <ThreeDots color="white" />
             </Loadbutton>
           </Wrapper>
         </form>

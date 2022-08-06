@@ -18,6 +18,7 @@ export default function Today() {
   //const { habits, setHabits } = useContext(UserContext);
   const { token } = useContext(LoginContext);
   const [todayHabits, setTodayHabits] = useState([]);
+  const [reloadToday, setReloadToday] = useState(false);
 
   const weekday = dayjs().locale("pt-br").format("dddd");
   const day = dayjs().format("DD");
@@ -31,16 +32,20 @@ export default function Today() {
         setTodayHabits(res.data);
       })
       .catch("Aguarde...");
-  }, []);
+  }, [reloadToday]);
 
   function check(habitId) {
     const promise = checkHabit(habitId, createHeader(token));
-    promise.then();
+    promise.then(() => {
+      setReloadToday(!reloadToday);
+    });
   }
 
   function uncheck(habitId) {
     const promise = uncheckHabit(habitId, createHeader(token));
-    promise.then();
+    promise.then(() => {
+      setReloadToday(!reloadToday);
+    });
   }
 
   return (
