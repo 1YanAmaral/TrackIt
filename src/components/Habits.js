@@ -1,6 +1,6 @@
 import Footer from "./Footer";
 import Header from "./Header";
-import { Page, Info, Loadbutton } from "../styles/sharedStyles";
+import { Page } from "../styles/sharedStyles";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import {
@@ -44,7 +44,7 @@ function Days({ weekday, dayId, daysId, setDaysId }) {
 }
 
 export default function Habits() {
-  const { token, setToken } = useContext(LoginContext);
+  const { token } = useContext(LoginContext);
   const { habits, setHabits } = useContext(UserContext);
   const { checkedHabits, todayHabits } = useContext(UserContext);
   const [reload, setReload] = useState(false);

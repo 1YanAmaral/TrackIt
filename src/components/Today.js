@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { Page, SpanTitle } from "../styles/sharedStyles";
 import Header from "./Header";
-import { useContext, useEffect, useState } from "react";
-//import UserContext from "./context/UserContext";
+import { useContext, useEffect } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import Footer from "./Footer";

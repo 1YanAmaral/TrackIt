@@ -120,9 +120,9 @@ export default function SignUpPage() {
               onChange={handleForm}
               value={form.image}
             />
-            <Bigbutton type="submit">
+            <Loadbutton type="submit">
               <ThreeDots color="white" />
-            </Bigbutton>
+            </Loadbutton>
           </Wrapper>
         </form>
       )}

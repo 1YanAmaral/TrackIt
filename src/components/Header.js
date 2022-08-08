@@ -3,7 +3,7 @@ import { useContext } from "react";
 import UserContext from "./context/UserContext";
 
 export default function Header() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <HeaderStyle>
