@@ -13,14 +13,18 @@ import {
 } from "../services/trackItServices";
 import LoginContext from "./context/LoginContext";
 import UserContext from "./context/UserContext";
+import updateLocale from "dayjs/plugin/updateLocale";
 
 export default function Today() {
-  //const { habits, setHabits } = useContext(UserContext);
+  dayjs.extend(updateLocale);
+  dayjs.updateLocale("pt-br", {
+    weekdays: "Domingo_Segunda_Terça_Quarta_Quinta_Sexta_Sábado".split("_"),
+  });
   const { token } = useContext(LoginContext);
   const { checkedHabits, setCheckedHabits, todayHabits, setTodayHabits } =
     useContext(UserContext);
 
-  const weekday = dayjs().locale("pt-br").format("dddd");
+  const weekday = dayjs().locale("pt-br").format("dddd").toString();
   const day = dayjs().format("DD");
   const month = dayjs().format("MM");
 

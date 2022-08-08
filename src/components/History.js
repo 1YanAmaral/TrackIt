@@ -26,7 +26,7 @@ const Message = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 29px;
+  //line-height: 29px;
   color: #666666;
   margin: 20px 20px;
 `;
