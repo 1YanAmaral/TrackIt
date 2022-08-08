@@ -62,8 +62,8 @@ export default function Today() {
           <SpanToDo>Nenhum hábito concluído ainda</SpanToDo>
         ) : (
           <SpanDone>
-            {(checkedHabits.length / todayHabits.length) * 100}% dos hábitos
-            concluídos
+            {Math.floor((checkedHabits.length / todayHabits.length) * 100)}% dos
+            hábitos concluídos
           </SpanDone>
         )}
 
@@ -74,7 +74,16 @@ export default function Today() {
               <HabitTrack>
                 Sequência atual: <Green>{value.currentSequence} dias</Green>
               </HabitTrack>
-              <HabitTrack>Seu recorde: {value.highestSequence} dias</HabitTrack>
+              {value.currentSequence === value.highestSequence ? (
+                <HabitTrack>
+                  Seu recorde: <Green>{value.highestSequence} dias</Green>
+                </HabitTrack>
+              ) : (
+                <HabitTrack>
+                  Seu recorde: {value.highestSequence} dias
+                </HabitTrack>
+              )}
+
               <ion-icon
                 name="checkbox"
                 onClick={() => uncheck(value.id)}

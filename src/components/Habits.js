@@ -1,6 +1,6 @@
 import Footer from "./Footer";
 import Header from "./Header";
-import { Page, Info } from "../styles/sharedStyles";
+import { Page, Info, Loadbutton } from "../styles/sharedStyles";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import {
@@ -48,6 +48,7 @@ export default function Habits() {
   const { habits, setHabits } = useContext(UserContext);
   const { checkedHabits, todayHabits } = useContext(UserContext);
   const [reload, setReload] = useState(false);
+  const [creating, setCreating] = useState(false);
 
   const [clicked, setClicked] = useState(false);
   const [daysId, setDaysId] = useState([]);
@@ -56,13 +57,13 @@ export default function Habits() {
   });
 
   const arrDays = [
-    { id: 1, name: "D" },
-    { id: 2, name: "S" },
-    { id: 3, name: "T" },
+    { id: 0, name: "D" },
+    { id: 1, name: "S" },
+    { id: 2, name: "T" },
+    { id: 3, name: "Q" },
     { id: 4, name: "Q" },
-    { id: 5, name: "Q" },
+    { id: 5, name: "S" },
     { id: 6, name: "S" },
-    { id: 7, name: "S" },
   ];
 
   useEffect(() => {
@@ -87,6 +88,7 @@ export default function Habits() {
 
   function newHabit(e) {
     e.preventDefault();
+    setCreating(true);
     const body = {
       ...form,
       days: daysId,
@@ -95,10 +97,10 @@ export default function Habits() {
     const promise = createHabit(body, createHeader(token));
     promise.then((res) => {
       console.log(res.data, habits);
+      setClicked(false);
+      setCreating(false);
       setReload(!reload);
     });
-
-    setClicked(false);
   }
 
   function delHabit(habitId) {
@@ -121,134 +123,95 @@ export default function Habits() {
 
   return (
     <>
-      {habits.length === 0 ? (
-        <>
-          <Header />
-          <Page>
-            <Group>
-              <SpanHabits>Meus hábitos</SpanHabits>
-              <AddButton
-                onClick={() => {
-                  setClicked(!clicked);
-                }}
-              >
-                +
-              </AddButton>
-            </Group>
-            <HabitsGroup>
-              {clicked ? (
-                <HabitAdd>
-                  <form onSubmit={newHabit}>
-                    <HabitInput
-                      name="name"
-                      onChange={handleForm}
-                      value={form.name}
-                      placeholder="nome do hábito"
-                    ></HabitInput>
-                    <OptionsGroup>
-                      {arrDays.map((day) => (
-                        <Days
-                          weekday={day.name}
-                          dayId={day.id}
-                          daysId={daysId}
-                          setDaysId={setDaysId}
-                        />
-                      ))}
-                    </OptionsGroup>
-                    <ButtonGroup>
-                      <CancelButton>Cancelar</CancelButton>
-                      <SaveButton type="submit">Salvar</SaveButton>
-                    </ButtonGroup>
-                  </form>
-                </HabitAdd>
-              ) : (
-                <></>
-              )}
-
-              <UserHabit>
-                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
-                para começar a trackear!
-              </UserHabit>
-            </HabitsGroup>
-          </Page>
-          <Footer />
-        </>
-      ) : (
-        <>
-          <Header />
-          <Page>
-            <Group>
-              <SpanHabits>Meus hábitos</SpanHabits>
-              <AddButton
-                onClick={() => {
-                  setClicked(!clicked);
-                }}
-              >
-                +
-              </AddButton>
-            </Group>
-            <HabitsGroup>
-              {clicked ? (
-                <HabitAdd>
-                  <form onSubmit={newHabit}>
-                    <HabitInput
-                      name="name"
-                      onChange={handleForm}
-                      value={form.name}
-                      placeholder="nome do hábito"
-                    ></HabitInput>
-                    <OptionsGroup>
-                      {arrDays.map((day) => (
-                        <Days
-                          weekday={day.name}
-                          dayId={day.id}
-                          daysId={daysId}
-                          setDaysId={setDaysId}
-                        />
-                      ))}
-                    </OptionsGroup>
-                    <ButtonGroup>
-                      <CancelButton>Cancelar</CancelButton>
-                      <SaveButton type="submit">Salvar</SaveButton>
-                    </ButtonGroup>
-                  </form>
-                </HabitAdd>
-              ) : (
-                <></>
-              )}
-
-              {habits.map((value) => (
-                <>
-                  <HabitDiv>
-                    <UserHabit>{value.name}</UserHabit>
-                    <ion-icon
-                      onClick={() => {
-                        delHabit(value.id);
-                      }}
-                      name="trash-outline"
-                    ></ion-icon>
-                    <OptionsGroup>
-                      {arrDays.map((day, index) =>
-                        Number(day.id) === Number(value.days[index]) ? (
-                          <DayOptions inputColor="white" bgColor="#cfcfcf">
-                            {day.name}
-                          </DayOptions>
-                        ) : (
-                          <DayOptions inputColor="#cfcfcf" bgColor="white">
-                            {value.days}
-                          </DayOptions>
-                        )
-                      )}
-                    </OptionsGroup>
-                  </HabitDiv>
-                </>
-              ))}
-            </HabitsGroup>
-          </Page>
-
-          <Footer checked={checkedHabits.length} today={todayHabits.length} />
-        </>
-      )}
+      <Header />
+      <Page>
+        <Group>
+          <SpanHabits>Meus hábitos</SpanHabits>
+          <AddButton
+            onClick={() => {
+              setClicked(!clicked);
+            }}
+          >
+            +
+          </AddButton>
+        </Group>
+        <HabitsGroup>
+          {clicked ? (
+            <HabitAdd>
+              <form onSubmit={newHabit}>
+                <HabitInput
+                  name="name"
+                  onChange={handleForm}
+                  value={form.name}
+                  placeholder="nome do hábito"
+                ></HabitInput>
+                <OptionsGroup>
+                  {arrDays.map((day) => (
+                    <Days
+                      weekday={day.name}
+                      dayId={day.id}
+                      daysId={daysId}
+                      setDaysId={setDaysId}
+                    />
+                  ))}
+                </OptionsGroup>
+                <ButtonGroup>
+                  <CancelButton
+                    onClick={() => {
+                      setClicked(false);
+                    }}
+                  >
+                    Cancelar
+                  </CancelButton>
+                  {creating ? (
+                    <SaveButton type="submit" disabled>
+                      <ThreeDots color="white" height="50" width="50" />
+                    </SaveButton>
+                  ) : (
+                    <SaveButton type="submit">Salvar</SaveButton>
+                  )}
+                </ButtonGroup>
+              </form>
+            </HabitAdd>
+          ) : (
+            <></>
+          )}
+          {habits.length === 0 ? (
+            <UserHabit>
+              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
+              para começar a trackear!
+            </UserHabit>
+          ) : (
+            habits.map((value) => (
+              <>
+                <HabitDiv>
+                  <UserHabit>{value.name}</UserHabit>
+                  <ion-icon
+                    onClick={() => {
+                      delHabit(value.id);
+                    }}
+                    name="trash-outline"
+                  ></ion-icon>
+                  <OptionsGroup>
+                    {arrDays.map((day) =>
+                      Number(day.id) === Number(value.days) ? (
+                        <DayOptions inputColor="white" bgColor="#cfcfcf">
+                          {day.name}
+                        </DayOptions>
+                      ) : (
+                        <DayOptions inputColor="#cfcfcf" bgColor="white">
+                          {day.name}
+                        </DayOptions>
+                      )
+                    )}
+                  </OptionsGroup>
+                </HabitDiv>
+              </>
+            ))
+          )}
+        </HabitsGroup>
+      </Page>
+      <Footer checked={checkedHabits.length} today={todayHabits.length} />
     </>
   );
 }
